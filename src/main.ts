@@ -1,7 +1,7 @@
 import "./scss/main.scss";
 import * as PIXI from "pixi.js-legacy";
 import Handlers from "./utils/handlers";
-import Demo from "./_Main/MainMenu";
+import Demo from "./Eugene/Shooter/Main";
 
 initPIXI();
 const handlers = new Handlers();

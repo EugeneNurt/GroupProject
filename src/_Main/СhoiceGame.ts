@@ -33,6 +33,7 @@ export default class ChoiceGame{
         this.gal.height = window.app.screen.height/5;
 
         this.Create(i);
+        //window.app.stage.rotation = 1,57;
     }
 
     Create(i: number) {
@@ -155,5 +156,6 @@ export default class ChoiceGame{
     Back() {
         this.RemoveAll();
         this.mainMenu.AddButtons();
+        this.mainMenu.RemoveChoiceGame();
     }
 }

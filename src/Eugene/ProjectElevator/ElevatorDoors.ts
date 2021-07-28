@@ -9,22 +9,22 @@ export default class Eldoors {
         this.left = -1;
 
         this.door1 = new PIXI.Graphics;
-        this.door1.lineStyle(10, 0xd5402b, 1)
-        this.door1.position.x = rect.position.x + 13;
-        this.door1.position.y = rect.position.y + 25;
-        this.door1.pivot.set(0, 24);
+        this.door1.lineStyle(window.app.screen.width/200, 0xd5402b, 1)
+        this.door1.position.x = rect.position.x + window.app.screen.width/150;
+        this.door1.position.y = rect.position.y + window.app.screen.height/45;
+        this.door1.pivot.set(0, window.app.screen.width/80);
         this.door1.moveTo(5, 0);
-        this.door1.lineTo(5, 55)
+        this.door1.lineTo(5, window.app.screen.height/20)
 
         window.app.stage.addChild(this.door1);
 
         this.door2 = new PIXI.Graphics;
-        this.door2.lineStyle(10, 0xd5402b, 1)
-        this.door2.position.x = rect.position.x + rect.width/2 - 6;
-        this.door2.position.y = rect.position.y + 25;
-        this.door2.pivot.set(0, 24);
+        this.door2.lineStyle(window.app.screen.width/200, 0xd5402b, 1)
+        this.door2.position.x = rect.position.x + rect.width/2 - window.app.screen.width/300;
+        this.door2.position.y = rect.position.y + window.app.screen.height/45;
+        this.door2.pivot.set(0, window.app.screen.width/80);
         this.door2.moveTo(5, 0);
-        this.door2.lineTo(5, 55)
+        this.door2.lineTo(5, window.app.screen.height/20)
 
         window.app.stage.addChild(this.door2);
     }
@@ -40,7 +40,7 @@ export default class Eldoors {
         if (this.door1.position.x <= rect.position.x) {
             this.left = 1;
         }
-        else if (this.door1.position.x >= rect.position.x + rect.width/2 - 10) {
+        else if (this.door1.position.x >= rect.position.x + rect.width/2 - window.app.screen.width/300) {
             this.left = -1;
             this.open = false;
         }

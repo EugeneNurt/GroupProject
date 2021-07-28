@@ -9,6 +9,10 @@ export default class MainMenu{
     }
 
     AddButtons() {
+        const w = window.sceneWidth;
+        const h = window.sceneHeight;
+        window.app.renderer.resize(w, h);
+
         this.buttons[0] = new PIXI.Sprite(PIXI.Texture.from("src/_Main/Image/Eugene.png"));
         this.buttons[1] = new PIXI.Sprite(PIXI.Texture.from("src/_Main/Image/Marina.png"));
         this.buttons[2] = new PIXI.Sprite(PIXI.Texture.from("src/_Main/Image/Rita.png"));
@@ -35,5 +39,9 @@ export default class MainMenu{
         for (let i = 0; i < 3; i++) {
             this.buttons[i].destroy();
         }
+    }
+
+    RemoveChoiceGame() {
+        
     }
 }
