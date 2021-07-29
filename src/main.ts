@@ -35,6 +35,7 @@ function initPIXI(): void {
     });
     window.renderer = app.renderer;
     window.app = app;
+    // app.stage.rotation += 1.57;
     getElement("sceneDiv").appendChild(app.view);
 }
 
@@ -43,5 +44,8 @@ function getElement(elementName: string): HTMLElement {
 }
 
 document.onready = function () {
+
+    window.changeResolution(1280, 720)
     window.sizeHandler();
+    window.app.stage.scale.set(sceneWidth / 1920, sceneHeight / 1080);
 };
