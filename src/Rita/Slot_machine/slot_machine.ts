@@ -1,8 +1,9 @@
-
+import СhoiceGame from "../../_Main/СhoiceGame";
 import StartButton from "./StartButton";
 import Field from "./Field";
 import Slot_Machine_Tweens from "./Slot_Machine_Tweens";
 import Textures from "./textures";
+import ExitButton from "../exitButton";
 
 export default class Slot_Machine {
     public startButton: StartButton;
@@ -10,15 +11,30 @@ export default class Slot_Machine {
     public slot_Machine_Tweens: Slot_Machine_Tweens;
     public isRunning: boolean;
     public textures: Textures;
+    public exit: ExitButton;
+    public choiceGame: СhoiceGame;
+    public ind: any[] = [];
 
-    constructor() {
+    constructor(choiceGame: СhoiceGame) {
+
         this.textures = new Textures();
         this.isRunning = false;
         this.field = new Field(this);
         this.startButton = new StartButton(this);
         this.slot_Machine_Tweens = new Slot_Machine_Tweens(this);
-
+        this.ind.push(window.app.loader.onComplete.add(this.field.fillField.bind(this.field)));
+        this.ind.push(window.app.loader.onComplete.add(this.startButton.createButton.bind(this.startButton)));
+        this.exit = new ExitButton(choiceGame, this);
     }
+
+    end() {
+        PIXI.utils.clearTextureCache()
+        window.app.loader.destroy();
+        window.app.stage.removeChildren();
+        window.app.loader.onComplete.detach(this.ind);
+        this.choiceGame.Create(this.choiceGame.autor);
+    }
+
 
     addLine(lineNumber: number) {
         this.field.winLines.winLines[lineNumber].visible = true;

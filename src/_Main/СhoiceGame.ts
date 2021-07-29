@@ -32,7 +32,7 @@ export default class ChoiceGame{
         this.gal.width = window.app.screen.width/8; 
         this.gal.height = window.app.screen.height/5;
 
-        this.Create(i);
+        this.Create(this.autor);
         //window.app.stage.rotation = 1,57;
     }
 
@@ -89,38 +89,42 @@ export default class ChoiceGame{
                 this.AddEugeneGames();
                 break;
             case(1):
-                this.AddRitaGames();
-                break;
-            case(2):
                 this.AddMarinaGames();
                 break;
-        }
-    }  
-
-    AddMarinaGames() {
-        switch (this.choice) {
-            case(0):
-                this.elevator = new RitaMainElevator();
-                break;
-            case(1): 
-                this.slot = new RitaMainSlot();
-                break;
             case(2):
-                this.shooter = new RitaMainShooter();
+                this.AddRitaGames();
                 break;
         }
-    }
+
+        this.start.buttonMode = false;
+        this.start.interactive = false;
+        this.gal.x = window.app.screen.width;
+    }  
 
     AddRitaGames() {
         switch (this.choice) {
             case(0):
-                this.elevator = new MarinaMainElevator();
+                this.elevator = new RitaMainElevator(this);
                 break;
             case(1): 
-                this.slot = new MarinaMainSlot();
+                this.slot = new RitaMainSlot(this);
                 break;
             case(2):
-                this.shooter = new MarinaMainShooter();
+                this.shooter = new RitaMainShooter(this);
+                break;
+        }
+    }
+
+    AddMarinaGames() {
+        switch (this.choice) {
+            case(0):
+                this.elevator = new MarinaMainElevator(this);
+                break;
+            case(1): 
+                this.slot = new MarinaMainSlot(this);
+                break;
+            case(2):
+                this.shooter = new MarinaMainShooter(this);
                 break;
         }
     }
@@ -128,13 +132,13 @@ export default class ChoiceGame{
     AddEugeneGames() {
         switch (this.choice) {
             case(0):
-                this.elevator = new EugeneMainElevator();
+                this.elevator = new EugeneMainElevator(this);
                 break;
             case(1): 
-                this.slot = new EugeneMainSlot();
+                this.slot = new EugeneMainSlot(this);
                 break;
             case(2):
-                this.shooter = new EugeneMainShooter();
+                this.shooter = new EugeneMainShooter(this);
                 break;
         }
     }

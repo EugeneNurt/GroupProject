@@ -14,7 +14,6 @@ export default class Button{
 
     draw(){
         this.button = new PIXI.Sprite(Texture.WHITE);
-        // this.button.tint = 0xFFD700;
         this.button.width = 25;
         this.button.height = 25;
         this.button.x = 490;

@@ -6,6 +6,8 @@ import Loader from './Loader';
 import Collisions from "./collisions";
 import Tween from "./Tween";
 import { Spine } from 'pixi-spine';
+import СhoiceGame from "../../_Main/СhoiceGame";
+import ExitButton from "../exitButton";
 
 export default class Game {
     public player: Player;
@@ -25,8 +27,13 @@ export default class Game {
     private timerCollisions: NodeJS.Timer;
     private sTimeout: NodeJS.Timeout;
     private playerJumping: boolean = false;
+    public exit: ExitButton;
+    public choiceGame: СhoiceGame;
+    public ind: any[] = [];
 
-    constructor() {
+    constructor(choiceGame: СhoiceGame) {
+
+
         this.tweens = [];
 
         this.background = this.makeBackground();
@@ -39,13 +46,13 @@ export default class Game {
         this.btn = this.makeStartBtn();
 
         this.loader = new Loader();
-        window.app.loader.onComplete.add(() => {
+        this.ind.push(window.app.loader.onComplete.add(() => {
             this.player = new Player(this.loader.player);
             this.boxes = new Boxes(this);
             this.bullets = new Bullets(this);
             this.enemies = new Enemies(this, this.loader.dragon);
-        });
-
+        }));
+        this.exit = new ExitButton(choiceGame, this);
         this.makeTicker();
 
         document.addEventListener('keydown', (e) => this.click(e));
@@ -142,7 +149,10 @@ export default class Game {
 
         this.tweens = [];
         this.isGameStart = false;
-        this.backgroundTween.stop();
+        if (this.backgroundTween) {
+            this.backgroundTween.stop();
+        }
+
         this.player.livesNumber = 5
         clearInterval(this.timerCollisions);
         clearTimeout(this.sTimeout);

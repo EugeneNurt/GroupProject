@@ -1,6 +1,8 @@
 import Cabin from "./cabin";
 import Button from "./button";
 import LiftLogic from "./liftLogic";
+import СhoiceGame from "../../_Main/СhoiceGame";
+import ExitButton from "../exitButton";
 
 export default class Lift {
     public cabin: Cabin;
@@ -8,8 +10,11 @@ export default class Lift {
     public logic: LiftLogic;
     public floorsCount: number;
     public scene: PIXI.Container;
+    public exit: ExitButton;
 
-    constructor() {
+
+    constructor(choiceGame: СhoiceGame) {
+        this.exit = new ExitButton(choiceGame, this);
 
         this.scene = this.createScene();
         window.app.stage.addChild(this.scene);
@@ -21,6 +26,7 @@ export default class Lift {
         this.cabin = new Cabin(this);
         this.logic = new LiftLogic(this);
     }
+
 
     createScene(): PIXI.Container {
         let r = new PIXI.Container();

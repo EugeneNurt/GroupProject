@@ -1,6 +1,8 @@
 import Cabin from "./Cabin";
 import Controller from "./Controller";
 import Button from "./Button";
+import ChoiceGame from "_Main/СhoiceGame";
+
 
 export default class Lift{
     public cabin: Cabin;
@@ -8,9 +10,13 @@ export default class Lift{
     public controller: Controller;
     public floorsNumber = 5;
     public background: PIXI.Sprite;
+    public backButton: PIXI.Sprite;
+    public choiceGame: ChoiceGame;
 
-    constructor(){
+    constructor(choiceGame: ChoiceGame){
+        this.choiceGame = choiceGame;
         this.createBg();
+        this.createBackButton();
 
         this.cabin = new Cabin(this);
         this.buttons = this.createButton();
@@ -35,5 +41,24 @@ export default class Lift{
             result.push(new Button(this, i));
         }
         return result;
+    }
+
+    createBackButton(){
+        let texture = PIXI.Texture.from('src/_Main/Image/back.png');
+        this.backButton = new PIXI.Sprite(texture);
+        this.backButton.width = window.app.screen.width/8; 
+        this.backButton.height = window.app.screen.height/5; 
+        this.backButton.x = window.app.screen.width - this.backButton.width - 20;
+        this.backButton.y = 20;
+        this.backButton.buttonMode = true;
+        this.backButton.interactive = true;
+        this.backButton.on("pointerdown", this.goBack.bind(this));
+        window.app.stage.addChild(this.backButton);
+    }
+
+    goBack(){
+        PIXI.utils.clearTextureCache();
+        window.app.stage.removeChildren();
+        this.choiceGame.Create(1);
     }
 }

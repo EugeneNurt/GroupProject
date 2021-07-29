@@ -52,6 +52,8 @@ export default class LiftLogic {
                 this.moveDoor(d);
                 this.queue.delete(this.task!.number);
             }
+
+            console.log("Работает");
         })
     }
 

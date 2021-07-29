@@ -15,7 +15,7 @@ export default class Field {
         this.columnsArr = [];
         this.commonContainer = new PIXI.Container();
         this.createMask();
-        window.app.loader.onComplete.add(this.fillField.bind(this));
+
     }
 
     createMask() {

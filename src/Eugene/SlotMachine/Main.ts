@@ -1,3 +1,4 @@
+import ChoiceGame from "_Main/СhoiceGame";
 import AllDraw from "./AllDraw";
 import Buttons from "./Buttons";
 import Tween from "./Tween";
@@ -10,11 +11,13 @@ export default class Main{
     public win_line: any;
     public draw_all:AllDraw;
     public buttons: Buttons;
-    constructor () {
+    public choice: ChoiceGame;
+    constructor (choice: ChoiceGame) {
         this.function = new Array();
         this.win_line = new Array();
+        this.choice = choice;
 
-        this.win_line = [
+        this.win_line = [  
             [[0,1],[1,1],[2,1],[3,1],[4,1]],
             [[0,2],[1,2],[2,2],[3,2],[4,2]],
             [[0,3],[1,3],[2,3],[3,3],[4,3]],
@@ -67,6 +70,30 @@ export default class Main{
         });
 
         window.app.ticker.start();
+
+        let back = new PIXI.Sprite(PIXI.Texture.from("src/_Main/Image/back.png"));
+        back.width = window.app.screen.width/8; 
+        back.height = window.app.screen.height/5; 
+        back.x = window.app.screen.width - back.width - 20;
+        back.y = 20;
+        back.buttonMode = true;
+        back.interactive = true;
+        back.on("pointerdown", this.end.bind(this));
+        window.app.stage.addChild(back);
+    }
+
+    end() {
+        PIXI.utils.clearTextureCache()
+        window.app.loader.destroy();
+        window.app.stage.removeChildren();
+        this.draw_all.tween_draw.destroy();
+        for(let i = 0; i < this.draw_all.tweens.length; i++) {
+            this.draw_all.tweens[i].destroy();
+        }
+        this.draw_all.logo.tween.destroy();
+        this.draw_all.logo2.tween.destroy();
+
+        this.choice.Create(this.choice.autor);
     }
 
     AddFunctions() {

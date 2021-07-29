@@ -11,7 +11,7 @@ export default class StartButton {
         this.slot_Machine = slot_Machine;
         this.field = slot_Machine.field;
 
-        window.app.loader.onComplete.add(this.createButton.bind(this));
+
 
     }
 

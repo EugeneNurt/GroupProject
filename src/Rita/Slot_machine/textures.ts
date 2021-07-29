@@ -5,9 +5,9 @@ export default class Textures {
 
     constructor() {
         this.frameTexture = [];
-        this.loadTextures();
         this.anims = [];
         this.buttonTextures = [];
+        this.loadTextures();
     }
 
     loadTextures(): void {
@@ -15,6 +15,7 @@ export default class Textures {
         for (let i = 1; i < 10; i++) {
             textures.push(`assets/texture${i}.json`)
         }
+
         window.app.loader
             .add(textures)
             .load((loader, resources) => {

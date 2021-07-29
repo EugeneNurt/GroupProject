@@ -6,9 +6,13 @@ import SpineBoy from "./SpineBoy";
 import Tween from "./Tween";
 import Collision from "./Collision";
 import Loader from "./Loader";
+import ChoiceGame from "_Main/СhoiceGame";
 
 
 export default class ShooterGame{
+    public timeOut: NodeJS.Timeout;
+    public choiceGame: ChoiceGame;
+    public backButton: PIXI.Sprite;
     public loader: Loader;
     public spineBoy: SpineBoy;
     public button: Button;
@@ -29,17 +33,20 @@ export default class ShooterGame{
     public score: number;
     public textScore: PIXI.Text;
     public isGameStart: boolean = false;
+    private e: any;
 
 
-    constructor(){
+    constructor(choiceGame: ChoiceGame){
+        this.choiceGame = choiceGame;
         this.loader = new Loader();
-        window.app.loader.onComplete.add(() => {
+        this.e = window.app.loader.onComplete.add(() => {
             this.boxes = this.createBox();
             this.spineBoy = new SpineBoy(this, this.loader.spineboy);
             this.bullets = this.createBullet();
             this.enemies = this.createMonster();
         });
         this.makeBg();
+        this.createBackButton();
         this.button = new Button(this);
         this.button.createGameOvBanner();
         this.newGame();
@@ -206,7 +213,7 @@ export default class ShooterGame{
                 this.addEnemy();
             }
 
-            setTimeout(() => {
+            this.timeOut = setTimeout(() => {
                 this.newHindrance();
 
             }, Math.random() * 1500);
@@ -301,5 +308,29 @@ export default class ShooterGame{
                     this.spineBoy.spineAnim.state.addEmptyAnimation(1, 1, 0); 
                     this.currentBull.visible = false}, 1);
         }
+    }
+
+    createBackButton(){
+        let texture = PIXI.Texture.from('src/_Main/Image/back.png');
+        this.backButton = new PIXI.Sprite(texture);
+        this.backButton.width = window.app.screen.width/8; 
+        this.backButton.height = window.app.screen.height/5; 
+        this.backButton.x = window.app.screen.width - this.backButton.width - 20;
+        this.backButton.y = 20;
+        this.backButton.buttonMode = true;
+        this.backButton.interactive = true;
+        this.backButton.on("pointerdown", this.goBack.bind(this));
+        window.app.stage.addChild(this.backButton);
+    }
+
+    goBack(){
+        PIXI.utils.clearTextureCache();
+        this.tweens.forEach((tw) => tw.destroy());
+        this.tweens = [];
+        window.app.loader.destroy();
+        window.app.stage.removeChildren();
+        clearTimeout(this.timeOut);
+        window.app.loader.onComplete.detach(this.e);
+        this.choiceGame.Create(1);
     }
 }

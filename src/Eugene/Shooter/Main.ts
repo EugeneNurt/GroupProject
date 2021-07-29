@@ -1,4 +1,5 @@
 import { Spine } from "pixi-spine";
+import ChoiceGame from "_Main/СhoiceGame";
 import Bush from "./Bush";
 import Buttons from "./Buttons";
 import Collision from "./Collision";
@@ -19,10 +20,12 @@ export default class Main {
     public timer_enemy: number;
     public dead:boolean;
     public enemy: Enemy;
-    constructor() {
+    public choice: ChoiceGame;
+    constructor(choice: ChoiceGame) {
         this.addSpineBoy();
         this.timer = 0;
         this.timer_enemy = 0;
+        this.choice = choice;
 
         const texture = PIXI.Texture.from("src/Eugene/Shooter/Image/bg.jpg");
         const tilingSprite = new PIXI.TilingSprite(
@@ -83,6 +86,31 @@ export default class Main {
                 }
             })
         }, 4700);
+
+        let back = new PIXI.Sprite(PIXI.Texture.from("src/_Main/Image/back.png"));
+        back.width = window.app.screen.width/8; 
+        back.height = window.app.screen.height/5; 
+        back.x = window.app.screen.width - back.width - 20;
+        back.y = 20;
+        back.buttonMode = true;
+        back.interactive = true;
+        back.on("pointerdown", this.end.bind(this));
+        window.app.stage.addChild(back);
+    }
+
+    end() {
+        PIXI.utils.clearTextureCache()
+        window.app.loader.destroy();
+        window.app.stage.removeChildren();
+        this.enemy.tween.destroy();
+        this.bush[0].tween.destroy();
+        this.bush[1].tween.destroy();
+        for(let i = 0; i < this.sh_ht.bullets.length; i++){
+            this.sh_ht.bullets[i].tween.destroy();
+        }
+        this.sh_ht.tween.destroy();
+
+        this.choice.Create(this.choice.autor);
     }
 
     addSpineBoy(): void {
