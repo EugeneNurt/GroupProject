@@ -16,7 +16,7 @@ export default class Button{
         this.button = new PIXI.Sprite(Texture.WHITE);
         this.button.width = 25;
         this.button.height = 25;
-        this.button.x = 490;
+        this.button.x = 590;
         this.button.y = 850 - this.floor * 150; 
         this.button.interactive = true;
         this.button.buttonMode = true;
@@ -31,15 +31,15 @@ export default class Button{
         let background = new PIXI.Sprite(texture);
         background.width = 465;
         background.height = 148;
-        background.x = 490;
+        background.x = 590;
         background.y = 850 - this.floor * 150; 
-        window.app.stage.addChild(background);
+        this.parent.container.addChild(background);
 
         let text = new PIXI.Text(this.floor.toString(), { fontFamily: 'Arial', fontSize: 15, fill: 0x000000 });
 
         this.button.addChild(text);
         this.button.addChild(ground);
-        window.app.stage.addChild(this.button);
+        this.parent.container.addChild(this.button);
     }
 
     onButtonDown(){

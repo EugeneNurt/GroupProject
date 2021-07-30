@@ -21,7 +21,7 @@ export default class Bullets {
             e.y = this.game.player.player.y - this.game.player.player.width / 2 - 100
             e.x = 0;
             e.visible = false;
-            window.app.stage.addChild(e);
+            this.game.scene.addChild(e);
             this.bulletsArr.push(e);
         }
     }

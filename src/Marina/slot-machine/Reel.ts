@@ -110,7 +110,7 @@ export default class Reel{
             this.containerArr.push(col);
             this.reelContainer.addChild(col);
         }
-        window.app.stage.addChild(this.reelContainer);
+        this.parent.container.addChild(this.reelContainer);
 
         this.parent.win.createWinLines();
     }
@@ -120,7 +120,7 @@ export default class Reel{
         thing.clear();
         thing.drawRect(500, 300, 500, 300);
         this.reelContainer.mask = thing;
-        window.app.stage.addChild(thing);
+        this.parent.container.addChild(thing);
     }
 
     addTextures(){

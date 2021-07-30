@@ -22,6 +22,7 @@ export default class Field {
         let mask = new PIXI.Graphics();
         mask.lineStyle(1, 0x000000, 1);
         mask.drawRect(window.app.screen.width / 2 - 250, 350, 500, 300);
+        this.slot_Machine.scene.addChild(mask);
         this.commonContainer.mask = mask;
     }
 
@@ -30,7 +31,7 @@ export default class Field {
         g.beginFill(0x000000)
         g.drawRect(window.app.screen.width / 2 - 250, 350, 500, 300);
         g.endFill();
-        window.app.stage.addChild(g);
+        this.slot_Machine.scene.addChild(g);
     }
 
     fillField() {
@@ -42,12 +43,12 @@ export default class Field {
             this.columnsArr.push(col);
             this.commonContainer.addChild(col);
         }
-        window.app.stage.addChild(this.commonContainer);
+        this.slot_Machine.scene.addChild(this.commonContainer);
 
         let frame = new PIXI.Graphics();
         frame.lineStyle(4, 0xFFFF00, 1);
         frame.drawRect(window.app.screen.width / 2 - 250, 350, 500, 300);
-        window.app.stage.addChild(frame);
+        this.slot_Machine.scene.addChild(frame);
 
         this.winLines = new WinLines(this.slot_Machine);
     }

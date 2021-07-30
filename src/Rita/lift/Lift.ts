@@ -18,6 +18,7 @@ export default class Lift {
 
         this.scene = this.createScene();
         window.app.stage.addChild(this.scene);
+        this.scene.scale.set(sceneWidth / screen.width, sceneHeight / screen.height)
         this.scene.sortableChildren = true;
 
         this.floorsCount = 5;

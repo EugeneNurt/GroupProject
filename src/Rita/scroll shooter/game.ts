@@ -30,9 +30,14 @@ export default class Game {
     public exit: ExitButton;
     public choiceGame: СhoiceGame;
     public ind: any[] = [];
+    public scene: PIXI.Container;
 
     constructor(choiceGame: СhoiceGame) {
 
+        this.scene = new PIXI.Container();
+        window.app.stage.addChild(this.scene);
+        this.scene.scale.set(sceneWidth / screen.width, sceneHeight / screen.height);
+        this.scene.sortableChildren = true;
 
         this.tweens = [];
 
@@ -44,10 +49,10 @@ export default class Game {
         this.bx.y = 580
 
         this.btn = this.makeStartBtn();
-
+        this.createControls();
         this.loader = new Loader();
         this.ind.push(window.app.loader.onComplete.add(() => {
-            this.player = new Player(this.loader.player);
+            this.player = new Player(this.loader.player, this);
             this.boxes = new Boxes(this);
             this.bullets = new Bullets(this);
             this.enemies = new Enemies(this, this.loader.dragon);
@@ -55,7 +60,33 @@ export default class Game {
         this.exit = new ExitButton(choiceGame, this);
         this.makeTicker();
 
+
         document.addEventListener('keydown', (e) => this.click(e));
+    }
+
+    createControls() {
+        let r = new PIXI.Sprite(PIXI.Texture.WHITE);
+        r.tint = 0x000000;
+        r.width = 100;
+        r.height = 100;
+        r.y = screen.height - 100;
+        r.zIndex = 2;
+        r.buttonMode = true;
+        r.interactive = true;
+        r.on('pointerdown', this.playerJump.bind(this));
+        this.scene.addChild(r);
+
+        let d = new PIXI.Sprite(PIXI.Texture.WHITE);
+        d.tint = 0x000000;
+        d.width = 100;
+        d.height = 100;
+        d.y = screen.height - 100;;
+        d.x = screen.width - 100;
+        d.zIndex = 2;
+        d.buttonMode = true;
+        d.interactive = true;
+        d.on('pointerdown', this.shoot.bind(this));
+        this.scene.addChild(d);
     }
 
     makeTicker() {
@@ -81,6 +112,7 @@ export default class Game {
     }
 
     makeStartBtn(): PIXI.Sprite {
+
         let t = PIXI.Texture.from('assets/btn.png')
         let btn = new PIXI.Sprite(t);
         btn.x = window.sceneWidth / 2 - 75
@@ -90,7 +122,7 @@ export default class Game {
         btn.buttonMode = true;
         btn.interactive = true;
         btn.on('pointerdown', this.startButtonClick.bind(this));
-        window.app.stage.addChild(btn);
+        this.scene.addChild(btn);
         return btn;
     }
 
@@ -118,7 +150,7 @@ export default class Game {
 
     start() {
         this.backgroundTween = new Tween().addControl(this.background.tilePosition)
-            .do({ x: [this.background.tilePosition.x, this.background.tilePosition.x - 1000] })
+            .do({ x: [this.background.tilePosition.x, this.background.tilePosition.x - screen.width] })
         this.isGameStart = true;
 
         this.timerCollisions = setInterval(() => {
@@ -233,7 +265,7 @@ export default class Game {
 
     click(e: KeyboardEvent) {
         if (this.player.player && e.code === 'Space' && !this.playerJumping) {
-            this.playerJumping = true;
+
             this.playerJump();
         }
         else if (this.player.player && e.code === 'KeyQ' && !this.playerJumping) {
@@ -252,19 +284,24 @@ export default class Game {
     }
 
     playerJump() {
+        this.playerJumping = true;
         this.player.hitbox.y -= this.player.hitbox.height - 50;
         this.player.player.state.setAnimation(0, 'jump', false).mixDuration = 0.2;
         this.player.player.state.addAnimation(0, 'run', true, 0);
         this.addTween().addControl(this.player.hitbox)
-            .do({ y: [364, 100] }, Tween.Pipe(Tween.QuadraticInOut, Tween.LinearBack))
+            .do({ y: [screen.height - this.player.hitbox.width * 5, screen.height - this.player.hitbox.width * 5 - 200] }, Tween.Pipe(Tween.QuadraticInOut, Tween.LinearBack))
             .start(2000, () => this.playerJumping = false, 1);
     }
 
     makeBackground(): PIXI.TilingSprite {
         let t = PIXI.Texture.from('assets/back.jpg');
-        let r = new PIXI.TilingSprite(t, window.sceneWidth, window.sceneHeight);
-        r.scale.set(1.2, 1.2);
-        window.app.stage.addChild(r);
+        let r = new PIXI.TilingSprite(t, screen.width, screen.height);
+        r.tileScale.set(sceneWidth / 1000, sceneHeight / 750)
+        // let a = t.width
+        // 1000 x 750
+        // r.tileScale.set(1.2, 1.2)
+        // r.tileScale.set(0.8, 0.8)
+        this.scene.addChild(r);
         return r;
     }
 }

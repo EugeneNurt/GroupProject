@@ -12,7 +12,7 @@ export default class WinLines {
         this.winLines = [];
 
         this.createWinLines();
-        window.app.stage.addChild(this.winLinesCont);
+        this.slot_Machine.scene.addChild(this.winLinesCont);
     }
 
     createWinLines() {

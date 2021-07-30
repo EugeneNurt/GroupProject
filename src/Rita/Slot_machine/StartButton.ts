@@ -10,9 +10,6 @@ export default class StartButton {
 
         this.slot_Machine = slot_Machine;
         this.field = slot_Machine.field;
-
-
-
     }
 
     createButton() {
@@ -21,11 +18,11 @@ export default class StartButton {
         button.width = 100;
         button.height = 50;
         button.x = window.app.screen.width / 2 - button.width / 2;
-        button.y = 160;
+        button.y = 250;
         button.buttonMode = true;
         button.interactive = true;
         button.on('pointerdown', this.onClick.bind(this));
-        window.app.stage.addChild(button);
+        this.slot_Machine.scene.addChild(button);
     }
 
     onClick(): void {

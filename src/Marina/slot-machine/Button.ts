@@ -19,7 +19,7 @@ export default class Button{
         this.button.interactive = true;
         this.button.buttonMode = true;
         this.button.on('pointerdown', this.onButtonDown.bind(this));
-        window.app.stage.addChild(this.button);
+        this.parent.container.addChild(this.button);
     }
 
     onButtonDown(){

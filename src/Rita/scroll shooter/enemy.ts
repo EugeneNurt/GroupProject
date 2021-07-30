@@ -18,21 +18,21 @@ export default class Enemy {
         this.game = game;
         let e = new PIXI.Sprite(PIXI.Texture.EMPTY);
         e.width = 200;
-        e.y = 430
-        e.visible = false;
+        e.y = screen.height - 280;
+        // e.visible = false;
         e.height = 200;
         this.hitbox = e;
-        window.app.stage.addChild(e);
+        this.game.scene.addChild(e);
 
         const animation = new Spine(dragon.spineData);
         animation.x = window.sceneWidth
-        animation.y = 580
+        animation.y = screen.height - 280;
         animation.visible = false;
         animation.width = -animation.width
         animation.state.setAnimation(0, 'flying', true);
         animation.state.timeScale = 0.4;
         this.enemy = animation
-        window.app.stage.addChild(animation);
+        this.game.scene.addChild(animation);
     }
 
     start() {

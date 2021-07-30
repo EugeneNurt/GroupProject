@@ -44,8 +44,8 @@ function getElement(elementName: string): HTMLElement {
 }
 
 document.onready = function () {
-
     window.changeResolution(1280, 720)
     window.sizeHandler();
-    window.app.stage.scale.set(sceneWidth / 1920, sceneHeight / 1080);
+    // screen.orientation = 'landscape';
+    // window.app.stage.scale.set(sceneWidth / 1920, sceneHeight / 1080);
 };

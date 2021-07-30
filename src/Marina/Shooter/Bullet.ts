@@ -14,8 +14,7 @@ export default class Bullet{
         this.bullet = new PIXI.Sprite(texture);
         this.bullet.width = 70;
         this.bullet.height = 70;
-        // this.bullet.rotation = 5.6;
         this.bullet.visible = false;
-        window.app.stage.addChild(this.bullet);
+        this.parent.container.addChild(this.bullet);
     }
 }

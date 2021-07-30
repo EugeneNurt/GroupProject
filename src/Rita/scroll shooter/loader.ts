@@ -10,15 +10,15 @@ export default class Loader {
     }
 
     load() {
-        var spineLoaderOptions = { metadata: { spineSkeletonScale: 0.6 } };
-        var spineLoaderOptions1 = { metadata: { spineSkeletonScale: 0.5 } };
+        var spineLoaderOptions = { metadata: { spineSkeletonScale: 0.4 } };
+        var spineLoaderOptions1 = { metadata: { spineSkeletonScale: 0.3 } };
         window.app.loader
             .add('spineCharacter', 'assets/spineboy-pro.json', spineLoaderOptions)
             .add('spineDragon', 'assets/dragon.json', spineLoaderOptions1)
             .load((loader, resources) => {
                 const animation = new Spine(resources.spineCharacter.spineData);
-                animation.x = window.app.screen.width / 2 - 300;
-                animation.y = window.app.screen.height / 3 * 2 + 200;
+                animation.x = screen.width / 2 - 300;
+                animation.y = screen.height - animation.width + 100;
                 this.player = animation;
 
                 const animation1 = new Spine(resources.spineDragon.spineData);

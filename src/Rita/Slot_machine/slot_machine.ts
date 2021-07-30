@@ -14,8 +14,13 @@ export default class Slot_Machine {
     public exit: ExitButton;
     public choiceGame: СhoiceGame;
     public ind: any[] = [];
+    public scene: PIXI.Container;
 
     constructor(choiceGame: СhoiceGame) {
+        this.scene = new PIXI.Container();
+        this.scene.y = -250;
+        window.app.stage.addChild(this.scene);
+        this.scene.scale.set(sceneWidth / Math.max(screen.width, screen.height), sceneHeight / Math.min(screen.width, screen.height));
 
         this.textures = new Textures();
         this.isRunning = false;

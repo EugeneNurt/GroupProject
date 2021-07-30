@@ -6,6 +6,7 @@ export default class Slot_Machine_Tweens {
     public tweens: Tween[];
     private slot_Machine: Slot_Machine;
     private speed: number = 300;
+    public scene: PIXI.Container;
 
     constructor(slot_Machine: Slot_Machine) {
         this.tweens = [];

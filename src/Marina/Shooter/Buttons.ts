@@ -30,7 +30,7 @@ export default class Button{
         this.button.interactive = true;
         this.button.buttonMode = true;
         this.button.on('pointerdown', this.onButtonDown.bind(this));
-        window.app.stage.addChild(this.button);
+        this.parent.container.addChild(this.button);
     }
 
     onButtonDown(){
@@ -73,6 +73,6 @@ export default class Button{
         this.banner.endFill();
         this.banner.addChild(this.finalScore, this.restart, gameover, score);
         this.banner.visible = false;
-        window.app.stage.addChild(this.banner);
+        this.parent.container.addChild(this.banner);
     }
 }

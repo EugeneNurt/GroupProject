@@ -10,6 +10,7 @@ import ChoiceGame from "_Main/СhoiceGame";
 
 
 export default class ShooterGame {
+    public container: PIXI.Container;
     public timeOut: NodeJS.Timeout;
     public choiceGame: ChoiceGame;
     public backButton: PIXI.Sprite;
@@ -37,6 +38,7 @@ export default class ShooterGame {
 
 
     constructor(choiceGame: ChoiceGame) {
+        this.container = new PIXI.Container();
         this.choiceGame = choiceGame;
         this.loader = new Loader();
         this.e = window.app.loader.onComplete.add(() => {
@@ -52,6 +54,10 @@ export default class ShooterGame {
         this.newGame();
         this.createScore();
         document.addEventListener('keydown', (e) => this.onKeyPress(e))
+        this.container.scale.x = sceneWidth / 1504;
+        this.container.scale.y = sceneHeight / 906;
+        console.log(this.container.scale.y);
+        window.app.stage.addChild(this.container);
     }
 
     createBullet() {
@@ -87,7 +93,7 @@ export default class ShooterGame {
             });
         this.textScore.x = 700;
         this.textScore.y = 38;
-        window.app.stage.addChild(this.textScore);
+        this.container.addChild(this.textScore);
     }
 
     addTween(): Tween {
@@ -98,8 +104,10 @@ export default class ShooterGame {
 
     makeBg() {
         const texture = PIXI.Texture.from("assets/new_back2.jpeg");
-        this.background = new PIXI.TilingSprite(texture, window.screen.width, window.screen.height);
-        window.app.stage.addChild(this.background);
+        this.background = new PIXI.TilingSprite(texture, sceneWidth, sceneHeight);
+        // this.background.scale.y = 1;
+        // this.background.scale.x = 1;
+        this.container.addChild(this.background);
     }
 
     newGame() {
@@ -137,7 +145,7 @@ export default class ShooterGame {
 
     update() {
         if (this.isLife) {
-            this.score += 1 / 100;
+            this.score += 1/100;
             this.textScore.text = Math.round(this.score).toString();
 
             if (this.spineBoy.health === 0) {
@@ -149,7 +157,7 @@ export default class ShooterGame {
             for (let i = 0; i < this.tweens.length; i++) {
                 this.tweens[i].update(window.app.ticker.elapsedMS);
             }
-
+            
             this.background.tilePosition.x -= window.app.ticker.elapsedMS;
 
             if (this.isBoxOnScreen) {
@@ -227,15 +235,14 @@ export default class ShooterGame {
             this.isBoxOnScreen = true;
             this.currentBox = this.boxes[Math.floor(Math.random() * this.boxes.length)].box;
             this.currentBox.visible = true;
-
+            
             this.addTween().addControl(this.currentBox)
                 .do({ x: [this.currentBox.x, -200] })
                 .start(1800, () => {
-                    this.currentBox.x = window.app.screen.width;
+                    this.currentBox.x = window.app.screen.width; 
                     this.currentBox.visible = false;
-                    this.currentBox.height = 150;
-                    this.isBoxOnScreen = false;
-                }, 1);
+                    this.currentBox.height = 150; 
+                    this.isBoxOnScreen = false;}, 1);
         }
     }
 
@@ -244,12 +251,12 @@ export default class ShooterGame {
             this.isEnemyOnScreen = true;
             this.currentEnemy = this.enemies[Math.floor(Math.random() * this.enemies.length)];
             this.currentEnemy.enemy.visible = true;
-
+            
             this.addTween().addControl(this.currentEnemy.enemy)
                 .do({ x: [this.currentEnemy.enemy.x, -200] })
                 .start(2000, () => {
-                    this.currentEnemy.enemy.x = window.app.screen.width;
-                    this.currentEnemy.enemy.visible = false;
+                    this.currentEnemy.enemy.x = window.app.screen.width; 
+                    this.currentEnemy.enemy.visible = false; 
                     this.isEnemyOnScreen = false;
                 }, 1);
 
@@ -265,20 +272,20 @@ export default class ShooterGame {
     checkDamage(item: PIXI.Sprite) {
         if (this.spineBoy.spineAnim && Collision.checkCollision(this.spineBoy.hitBox, item)) {
             this.addTween().addControl(item)
-                .do({ height: [item.height, 0] }, Tween.Linear)
-                .start(300, undefined, 1);
+                .do({height:[item.height, 0]}, Tween.Linear)
+                .start(300,undefined, 1);
             this.spineBoy.changeHealth(5);
         }
     }
 
     checkHitEnemy() {
         if (this.spineBoy.spineAnim && this.isBullOnScreen && Collision.checkCollision(this.currentEnemy.rectM, this.currentBull)) {
-            this.addTween().addControl(this.currentEnemy.rectM).do({ height: [this.currentEnemy.rectM.height, 0] })
+            this.addTween().addControl(this.currentEnemy.rectM).do({height:[this.currentEnemy.rectM.height,0]})
                 .start(100, undefined, 1);
 
-            this.addTween().addControl(this.currentEnemy.enemy).do({ height: [this.currentEnemy.enemy.height, 0] })
+            this.addTween().addControl(this.currentEnemy.enemy).do({height:[this.currentEnemy.enemy.height, 0]})
                 .start(100, () => {
-                    this.currentEnemy.enemy.height = 200;
+                    this.currentEnemy.enemy.height = 200; 
                     this.currentEnemy.enemy.visible = false;
                 }, 1);
             this.isBullOnScreen = false;
@@ -288,16 +295,16 @@ export default class ShooterGame {
 
     onKeyPress(e: KeyboardEvent) {
         if (this.spineBoy.spineAnim && e.code === 'Space') {
-            if (!this.isJump) {
+            if(!this.isJump){
                 this.isJump = true;
-                this.spineBoy.hitBox.y -= this.spineBoy.hitBox.height - 50;
-                this.spineBoy.spineAnim.state.setAnimation(0, 'jump', false);
-                this.spineBoy.spineAnim.state.addAnimation(0, 'run', true, 0);
-                this.addTween()
-                    .addControl(this.spineBoy.hitBox)
-                    .do({ y: [this.spineBoy.hitBox.y + this.spineBoy.hitBox.height - 50, this.spineBoy.hitBox.y] }, Tween.LinearBack)
-                    .start(1400, () => this.isJump = false, 1);
-            }
+            this.spineBoy.hitBox.y -= this.spineBoy.hitBox.height - 50;
+            this.spineBoy.spineAnim.state.setAnimation(0, 'jump', false);
+            this.spineBoy.spineAnim.state.addAnimation(0, 'run', true, 0);
+            this.addTween()
+                .addControl(this.spineBoy.hitBox)
+                .do({ y: [this.spineBoy.hitBox.y + this.spineBoy.hitBox.height - 50, this.spineBoy.hitBox.y] }, Tween.LinearBack)
+                .start(1400, ()=> this.isJump = false, 1);
+            }   
         }
 
         if (this.spineBoy.spineAnim && e.code === 'KeyQ') {
@@ -306,33 +313,32 @@ export default class ShooterGame {
             this.spineBoy.spineAnim.state.setAnimation(1, 'aim', false);
             this.spineBoy.spineAnim.state.setAnimation(2, 'shoot', false);
 
-            this.currentBull = this.bullets[Math.floor(Math.random() * this.bullets.length)].bullet;
+            this.currentBull = this.bullets[Math.floor(Math.random()*this.bullets.length)].bullet;
             this.currentBull.visible = true;
 
             this.addTween().addControl(this.currentBull)
-                .do({ x: [this.spineBoy.hitBox.x, 1000], y: [this.spineBoy.hitBox.y + 100, 250] }).start(200, () => {
+                .do({x:[this.spineBoy.hitBox.x, window.app.screen.width/1.5], y:[this.spineBoy.hitBox.y + 100, window.app.screen.height/3]}).start(200, ()=>{
                     this.currentBull.x = this.spineBoy.hitBox.x;
-                    this.currentBull.y = 550;
-                    this.spineBoy.spineAnim.state.addEmptyAnimation(1, 1, 0);
-                    this.currentBull.visible = false
-                }, 1);
+                    this.currentBull.y = 550; 
+                    this.spineBoy.spineAnim.state.addEmptyAnimation(1, 1, 0); 
+                    this.currentBull.visible = false}, 1);
         }
     }
 
-    createBackButton() {
+    createBackButton(){
         let texture = PIXI.Texture.from('./assets/Image/back.png');
         this.backButton = new PIXI.Sprite(texture);
-        this.backButton.width = window.app.screen.width / 8;
-        this.backButton.height = window.app.screen.height / 5;
+        this.backButton.width = window.app.screen.width/8; 
+        this.backButton.height = window.app.screen.height/5; 
         this.backButton.x = window.app.screen.width - this.backButton.width - 20;
         this.backButton.y = 20;
         this.backButton.buttonMode = true;
         this.backButton.interactive = true;
         this.backButton.on("pointerdown", this.goBack.bind(this));
-        window.app.stage.addChild(this.backButton);
+        this.container.addChild(this.backButton);
     }
 
-    goBack() {
+    goBack(){
         PIXI.utils.clearTextureCache();
         this.tweens.forEach((tw) => tw.destroy());
         this.tweens = [];

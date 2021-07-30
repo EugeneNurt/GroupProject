@@ -16,12 +16,12 @@ export default class Boxes {
         for (let i = 0; i < 3; i++) {
             let t = PIXI.Texture.from('assets/камень.png');
             let e = new PIXI.Sprite(t);
-            e.width = 190;
-            e.height = 190;
+            e.width = 150;
+            e.height = 150;
             e.x = window.sceneWidth;
-            e.y = 580
+            e.y = screen.height - e.width - 100
             e.visible = false;
-            window.app.stage.addChild(e);
+            this.game.scene.addChild(e);
             this.boxes.push(e);
         }
     }
@@ -34,7 +34,7 @@ export default class Boxes {
         this.ind = this.ind === 2 ? 0 : this.ind + 1;
         this.boxes[this.ind].visible = true;
         let r = this.game.addTween().addControl(this.boxes[this.ind])
-            .do({ x: [window.sceneWidth, -190] })
+            .do({ x: [window.sceneWidth, 0 - this.boxes[this.ind].width] })
         r.start(2900, undefined, 1)
         // () => {
         //     if (this.inField.includes(r.controls[0])) {
