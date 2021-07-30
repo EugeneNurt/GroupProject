@@ -12,7 +12,10 @@ export default class MainElevator {
     public container:PIXI.Container;
     constructor(choiceGame: ChoiceGame) {
         this.container = new PIXI.Container;
+        this.container.width = window.sceneWidth;
+        this.container.height = window.sceneHeight;
         this.container.scale.set(window.sceneWidth/1920, window.sceneHeight/1080);
+        
         window.app.stage.addChild(this.container);
         
         this.elevator = new Elevator(this.container);

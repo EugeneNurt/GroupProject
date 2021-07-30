@@ -12,19 +12,17 @@ export default class Main {
     public draw_all: AllDraw;
     public buttons: Buttons;
     public choice: ChoiceGame;
-<<<<<<< HEAD
     public container: PIXI.Container;
     constructor (choice: ChoiceGame) {
-=======
-    constructor(choice: ChoiceGame) {
->>>>>>> 02c82da6474acddb75bf90acc5029a5a73d8609a
         this.function = new Array();
         this.win_line = new Array();
         this.choice = choice;
 
-<<<<<<< HEAD
         this.container = new PIXI.Container;
+        this.container.width = window.sceneWidth;
+        this.container.height = window.sceneHeight;
         this.container.scale.set(window.sceneWidth/1920, window.sceneHeight/1080);
+        
         window.app.stage.addChild(this.container);
 
         this.win_line = [  
@@ -37,18 +35,6 @@ export default class Main {
             [[0,2],[1,1],[2,1],[3,1],[4,2]],
             [[0,1],[1,1],[2,2],[3,3],[4,3]],
             [[0,3],[1,3],[2,2],[3,1],[4,1]],
-=======
-        this.win_line = [
-            [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]],
-            [[0, 2], [1, 2], [2, 2], [3, 2], [4, 2]],
-            [[0, 3], [1, 3], [2, 3], [3, 3], [4, 3]],
-            [[0, 1], [1, 2], [2, 3], [3, 2], [4, 1]],
-            [[0, 3], [1, 2], [2, 1], [3, 2], [4, 3]],
-            [[0, 2], [1, 3], [2, 3], [3, 3], [4, 2]],
-            [[0, 2], [1, 1], [2, 1], [3, 1], [4, 2]],
-            [[0, 1], [1, 1], [2, 2], [3, 3], [4, 3]],
-            [[0, 3], [1, 3], [2, 2], [3, 1], [4, 1]],
->>>>>>> 02c82da6474acddb75bf90acc5029a5a73d8609a
         ];
 
         this.time_move = 100;
