@@ -16,6 +16,10 @@ export default class Slot_Machine {
     public ind: any[] = [];
 
     constructor(choiceGame: СhoiceGame) {
+        let a = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/slotmachback.jpg"))
+        a.width = screen.width;
+        a.height = screen.height;
+        window.app.stage.addChild(a);
 
         this.textures = new Textures();
         this.isRunning = false;

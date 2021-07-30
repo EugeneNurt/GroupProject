@@ -14,6 +14,11 @@ export default class Lift {
 
 
     constructor(choiceGame: СhoiceGame) {
+        let a = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/back.jpg"))
+        a.width = screen.width;
+        a.height = screen.height;
+        window.app.stage.addChild(a);
+
         this.exit = new ExitButton(choiceGame, this);
 
         this.scene = this.createScene();

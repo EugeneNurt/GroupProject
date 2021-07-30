@@ -36,6 +36,11 @@ export default class ChoiceGame {
     }
 
     Create(i: number) {
+        this.gal.visible = false;
+        let a = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/back.jpg"))
+        a.width = screen.width;
+        a.height = screen.height;
+        window.app.stage.addChild(a);
         for (let j = 0; j < 3; j++) {
             this.border[j] = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/ramka.png"));
             this.border[j].width = sceneWidth / 4;
@@ -139,6 +144,7 @@ export default class ChoiceGame {
     }
 
     ClickButtonsGame(i: number) {
+        this.gal.visible = true;
         this.choice = i;
 
         this.start.buttonMode = true;
