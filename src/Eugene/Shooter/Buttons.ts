@@ -7,7 +7,7 @@ export default class Buttons {
     public jump_b: boolean;
     public down_b: boolean;
     public reload_b: boolean;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.jump_b = true;
         this.down_b = false;
         this.reload_b = false;
@@ -39,7 +39,7 @@ export default class Buttons {
         this.reload.height = 150;
         this.reload.anchor.set(0.5);
 
-        window.app.stage.addChild(this.jump, this.down, this.shoot, this.reload);
+        container.addChild(this.jump, this.down, this.shoot, this.reload);
     }
 
     AddInteractive() {

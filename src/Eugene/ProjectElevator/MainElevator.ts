@@ -9,9 +9,13 @@ export default class MainElevator {
     public buttonsEl: ButtonsEl[];
     public up: number;
     public choice: ChoiceGame;
-
+    public container:PIXI.Container;
     constructor(choiceGame: ChoiceGame) {
-        this.elevator = new Elevator();
+        this.container = new PIXI.Container;
+        this.container.scale.set(window.sceneWidth/1920, window.sceneHeight/1080);
+        window.app.stage.addChild(this.container);
+        
+        this.elevator = new Elevator(this.container);
         this.lines = new Array();
         this.buttonsEl = new Array();
         this.choice = choiceGame;
@@ -19,9 +23,9 @@ export default class MainElevator {
         this.up = -1;
 
         for (var i = 0; i < 5; i++) {
-            this.buttonsEl[i] = new ButtonsEl(i);
+            this.buttonsEl[i] = new ButtonsEl(i, this.container);
             this.buttonsEl[i].button.on('pointerdown', this.CallElevat.bind(this, i));
-            this.lines[i] = new Lines(i);
+            this.lines[i] = new Lines(i, this.container);
         }
         this.AddTicker();
 
@@ -33,7 +37,9 @@ export default class MainElevator {
         back.buttonMode = true;
         back.interactive = true;
         back.on("pointerdown", this.end.bind(this));
-        window.app.stage.addChild(back);
+
+        this.container.addChild(back);
+        window.app.stage.addChild(this.container);
     }
 
     end() {

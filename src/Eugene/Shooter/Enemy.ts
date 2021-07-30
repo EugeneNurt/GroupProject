@@ -11,7 +11,7 @@ export default class Enemy {
     public timer: number;
     public count_heart: number;
     public death: boolean;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.timer = 0;
         this.count_heart = 5;
         this.death = false;
@@ -30,7 +30,7 @@ export default class Enemy {
 
         this.add_enemy = false;
 
-        window.app.stage.addChild(this.enemy);
+        container.addChild(this.enemy);
 
         this.tween = new Tween();
 
@@ -74,6 +74,5 @@ export default class Enemy {
         this.tween.destroy();
         this.tween.addControl(this.enemy);
         this.tween.do({y:[this.enemy.y, window.app.screen.height]}).start(300, this.end_move_two.bind(this), 1);
-        console.log("Монстр умер");
     }
 }

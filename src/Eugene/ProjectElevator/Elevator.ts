@@ -5,8 +5,9 @@ export default class Elevator {
     public movement; up:boolean;
     public floors: number[];
     public eldoor: Eldoors;
-
-    constructor() {
+    public container: PIXI.Container;
+    constructor(container: PIXI.Container) {
+        this.container = container;
         this.rect = new PIXI.Graphics();   
         this.floors = new Array();
 
@@ -18,12 +19,12 @@ export default class Elevator {
     DrawElevator() {
         this.rect.lineStyle( 5, 0xd82257, 1 );
         this.rect.drawRect( 0, 0, 40, 55);
-        window.app.stage.addChild(this.rect);
+        this.container.addChild(this.rect);
 
         this.rect.position.x = window.sceneWidth/2 - 190;
         this.rect.position.y = window.sceneHeight/2 + 252;
 
-        this.eldoor = new Eldoors(this.rect);
+        this.eldoor = new Eldoors(this.rect, this.container);
     }
 
     AddFloor(y: number, onefloor: number, up: number) {

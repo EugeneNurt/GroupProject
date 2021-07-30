@@ -21,7 +21,12 @@ export default class Main {
     public dead: boolean;
     public enemy: Enemy;
     public choice: ChoiceGame;
+    public container: PIXI.Container;
     constructor(choice: ChoiceGame) {
+        this.container = new PIXI.Container;
+        this.container.scale.set(window.sceneWidth/1920, window.sceneHeight/1080);
+        window.app.stage.addChild(this.container);
+
         this.addSpineBoy();
         this.timer = 0;
         this.timer_enemy = 0;
@@ -30,27 +35,33 @@ export default class Main {
         const texture = PIXI.Texture.from("src/Eugene/Shooter/Image/bg.jpg");
         const tilingSprite = new PIXI.TilingSprite(
             texture,
-            window.app.screen.width,
-            window.app.screen.height,
+            window.sceneWidth,
+            window.sceneHeight,
         );
-        window.app.stage.addChild(tilingSprite);
+        this.container.addChild(tilingSprite);
 
         this.bush = [];
 
         for (let i = 0; i < 2; i++) {
-            this.bush[i] = new Bush();
+            this.bush[i] = new Bush(this.container);
         }
 
-        this.enemy = new Enemy();
+        this.enemy = new Enemy(this.container);
 
-        this.buttons = new Buttons();
+        this.buttons = new Buttons(this.container);
         this.buttons.jump.on('pointerdown', this.Jump.bind(this));
         this.buttons.down.on('pointerdown', this.Down.bind(this));
         this.buttons.shoot.on('pointerdown', this.Shot.bind(this));
         this.buttons.reload.on('pointerdown', this.Reloading.bind(this));
+<<<<<<< HEAD
+        
+        this.sh_ht = new Shot(this.container);
+        this.col_player = new Col_Player(this.container);
+=======
 
         this.sh_ht = new Shot();
         this.col_player = new Col_Player();
+>>>>>>> 02c82da6474acddb75bf90acc5029a5a73d8609a
 
         window.setTimeout(() => {
             window.app.ticker.add((d) => {
@@ -95,7 +106,7 @@ export default class Main {
         back.buttonMode = true;
         back.interactive = true;
         back.on("pointerdown", this.end.bind(this));
-        window.app.stage.addChild(back);
+        this.container.addChild(back);
     }
 
     end() {
@@ -123,7 +134,7 @@ export default class Main {
                 this.animation.height = 450;
                 this.animation.y = window.app.screen.height - 100;
                 // add the animation to the scene and render...
-                window.app.stage.addChild(this.animation);
+                this.container.addChild(this.animation);
 
                 if (this.animation.state.hasAnimation('aim') && this.animation.state.hasAnimation('hoverboard')) {
                     // run forever, little boy!

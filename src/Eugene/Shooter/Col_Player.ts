@@ -6,15 +6,15 @@ export default class Col_Player {
     public jump: boolean;
     public down: any;
     public down_end: any;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.jump = false;
 
-        this.col_player = new PIXI.Sprite(PIXI.Texture.WHITE);
+        this.col_player = new PIXI.Sprite(PIXI.Texture.EMPTY);
         this.col_player.x = 325;
         this.col_player.y = window.app.screen.height - 500;
         this.col_player.width = 250;
         this.col_player.height = 400;
-        //window.app.stage.addChild(this.col_player);
+        container.addChild(this.col_player);
 
         this.tween = new Tween();
 

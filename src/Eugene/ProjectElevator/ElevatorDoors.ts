@@ -4,7 +4,7 @@ export default class Eldoors {
     public open:boolean;
     public left: number;
 
-    constructor(rect: PIXI.Graphics) {
+    constructor(rect: PIXI.Graphics, container: PIXI.Container) {
         this.open = false;
         this.left = -1;
 
@@ -16,7 +16,7 @@ export default class Eldoors {
         this.door1.moveTo(5, 0);
         this.door1.lineTo(5, window.app.screen.height/20)
 
-        window.app.stage.addChild(this.door1);
+        container.addChild(this.door1);
 
         this.door2 = new PIXI.Graphics;
         this.door2.lineStyle(window.app.screen.width/200, 0xd5402b, 1)
@@ -26,7 +26,7 @@ export default class Eldoors {
         this.door2.moveTo(5, 0);
         this.door2.lineTo(5, window.app.screen.height/20)
 
-        window.app.stage.addChild(this.door2);
+        container.addChild(this.door2);
     }
 
     OpenDoor() {

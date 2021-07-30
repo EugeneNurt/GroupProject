@@ -7,7 +7,7 @@ export default class Bullet {
     public tween: Tween;
     public end: any;
     public shot_b: boolean;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.bullet = new PIXI.Sprite(PIXI.Texture.from('src/Eugene/Shooter/Image/Cartridge.png'));
         this.bullet.width = 25;
         this.bullet.height = 50;
@@ -16,7 +16,7 @@ export default class Bullet {
         this.bullet.x = -50;
         this.bullet.y = 0;
 
-        window.app.stage.addChild(this.bullet);
+        container.addChild(this.bullet);
 
         this.shot_b = false;
 

@@ -6,7 +6,7 @@ export default class Bush {
     public add_bush: boolean;
     public remove_heart: boolean;
     public end_move: any;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.bush = new PIXI.Sprite(PIXI.Texture.from('src/Eugene/Shooter/Image/bush.png'));
         this.bush.width = 300;
         this.bush.height = 200;
@@ -14,7 +14,7 @@ export default class Bush {
         this.bush.y = window.app.screen.height - 300;
         this.add_bush = false;
 
-        window.app.stage.addChild(this.bush);
+        container.addChild(this.bush);
 
         this.tween = new Tween();
 

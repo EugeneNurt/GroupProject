@@ -3,7 +3,7 @@ import { Graphics } from "pixi.js-legacy";
 export default class Lines {
     public arr_line:Graphics;
 
-    constructor(i: number) {
+    constructor(i: number, container: PIXI.Container) {
         this.arr_line = new PIXI.Graphics();
         this.arr_line.lineStyle(10, 0xd5402b, 1)
         this.arr_line.position.x = window.app.screen.width/2;
@@ -13,7 +13,7 @@ export default class Lines {
         this.arr_line.moveTo(5, 0);
         this.arr_line.lineTo(5, window.app.screen.width/7)
 
-        window.app.stage.addChild(this.arr_line)
+        container.addChild(this.arr_line)
     }
 
     public getCoordinatLine(): number{

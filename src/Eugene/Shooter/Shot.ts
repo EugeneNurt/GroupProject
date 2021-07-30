@@ -10,7 +10,7 @@ export default class Shot {
     public reload_b: boolean;
     public reload: any;
     public tween: Tween;
-    constructor() {
+    constructor(container: PIXI.Container) {
         this.count_shot = 5;
         this.count_heart = 5;
         this.shot = [];
@@ -27,7 +27,7 @@ export default class Shot {
             this.heart[i].x = 10 + i * 100
             this.heart[i].y = 10;
 
-            window.app.stage.addChild(this.heart[i]);
+            container.addChild(this.heart[i]);
         }
 
         for (let i = 0; i < this.count_shot; i++) {
@@ -37,9 +37,9 @@ export default class Shot {
             this.shot[i].x = 10 + i * 50;
             this.shot[i].y = 110;
 
-            this.bullets[i] = new Bullet();
+            this.bullets[i] = new Bullet(container);
 
-            window.app.stage.addChild(this.shot[i]);
+            container.addChild(this.shot[i]);
         }
     }
 

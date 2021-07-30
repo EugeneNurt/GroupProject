@@ -1,6 +1,6 @@
 export default class Buttons{
     public button_start:PIXI.Sprite;
-    constructor () {
+    constructor (container: PIXI.Container) {
         this.button_start = new PIXI.Sprite(PIXI.Texture.from('src/Eugene/SlotMachine/Image/button_start_stay.png'));
         this.button_start.anchor.set(0.5);
         this.button_start.x = window.sceneWidth/2 + 350;
@@ -8,6 +8,6 @@ export default class Buttons{
         this.button_start.buttonMode = true;
         this.button_start.interactive = true;
 
-        window.app.stage.addChild(this.button_start);
+        container.addChild(this.button_start);
     }
 }

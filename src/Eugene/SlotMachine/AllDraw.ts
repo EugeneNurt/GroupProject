@@ -23,7 +23,7 @@ export default class AllDraw{
     public line: PIXI.Sprite;
     public logo: Animation;
     public logo2: Animation;
-    constructor () {
+    constructor (container: PIXI.Container) {
         this.containers = new Array();
         this.slots = new Array();
         this.tweens = new Array();
@@ -45,7 +45,7 @@ export default class AllDraw{
         this.background.drawRect( window.sceneWidth/2 - 256, window.sceneHeight/2 - 154, 511, 307);
         this.background.endFill();
 
-        window.app.stage.addChild(this.background);
+        container.addChild(this.background);
 
         this.animations_arrays = new ArraysTextures();
 
@@ -77,10 +77,10 @@ export default class AllDraw{
         l2.y = window.sceneHeight/2 + 150;
         this.logo2 = new Animation(l2, this.animations_arrays.textures_logo);
 
-        window.app.stage.addChild(l, l2);
+        container.addChild(l, l2);
 
-        window.app.stage.addChild(this.main_container);
-        window.app.stage.addChild(this.mask);
+        container.addChild(this.main_container);
+        container.addChild(this.mask);
         this.main_container.mask = this.mask;
         
         this.line = new PIXI.Sprite(this.animations_arrays.textures_lines[0]);
@@ -88,7 +88,7 @@ export default class AllDraw{
         this.line.y = window.sceneHeight/2 - 154;
         this.line.width = 511;
         this.line.height = 307;
-        window.app.stage.addChild(this.line);
+        container.addChild(this.line);
     }
 
     DrawBoxAndLines (win_line: [][]) {
