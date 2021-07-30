@@ -11,6 +11,13 @@ export default class MainElevator {
     public choice: ChoiceGame;
 
     constructor(choiceGame: ChoiceGame) {
+
+
+        let a = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/back1.jpg"))
+        a.width = screen.width;
+        a.height = screen.height;
+        window.app.stage.addChild(a);
+
         this.elevator = new Elevator();
         this.lines = new Array();
         this.buttonsEl = new Array();
@@ -34,6 +41,7 @@ export default class MainElevator {
         back.interactive = true;
         back.on("pointerdown", this.end.bind(this));
         window.app.stage.addChild(back);
+
     }
 
     end() {

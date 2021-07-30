@@ -13,6 +13,11 @@ export default class Main {
     public buttons: Buttons;
     public choice: ChoiceGame;
     constructor(choice: ChoiceGame) {
+        let a = new PIXI.Sprite(PIXI.Texture.from("./assets/Image/back3.jpg"))
+        a.width = screen.width;
+        a.height = screen.height;
+        window.app.stage.addChild(a);
+
         this.function = new Array();
         this.win_line = new Array();
         this.choice = choice;
